@@ -1,0 +1,80 @@
+
+.component-title{
+    text-align: center;
+}
+
+.cards-container{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-content:space-around ;
+    padding-left: 25px;
+    flex-wrap: wrap;
+}
+
+.clients-details-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.payments-table{
+    max-width: 500px;
+    background-color: rgb(46, 46, 46);
+    color: white;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 25px;
+}
+
+.client-details-principal{
+    padding: 55px;
+}
+
+.client-active{
+    background-color: rgb(182, 247, 225);
+}
+
+.client-inactive{
+    background-color: rgb(248, 197, 182);
+}
+
+.formik-container{
+    gap: 5px;
+    margin: 0 auto;
+    background-color: #ccc;
+    border: 1px solid rgb(5, 0, 0);
+    border-radius: 25px;
+    padding: 20px;
+}
+
+h3, h5, h6{
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.error{
+    color: red
+}
+
+
+form label{
+    width: 15%;
+   
+}
+
+form input{
+    width: 25%;
+    margin-right: 30px;
+}
+
+.search-form{
+    display: flex;
+    flex-direction: row;
+}
+
+.search-form input{
+    width: 45%;
+    height: 40px;
+}

@@ -1,0 +1,42 @@
+.logo {
+    text-align: center;
+    min-height: 95px;
+    line-height: 90px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.container {
+    background-color: #ccc;
+    min-height: 100vh;
+    margin-top: 10px;
+    padding-top: 15px;
+}
+
+.spinner-container {
+    line-height: 350px;
+    margin-left: 50%;
+}
+
+.formik-container {
+    max-width: 500px;
+}
+
+.payment-table {
+    margin: 0 auto;
+}
+
+.formik-container label,
+.formik-container input {
+    width: 100%;
+}
+
+.list-group {
+    max-width: 75%;
+    margin: 0 auto;
+}
+
+.list-group-client {
+    max-width: 30%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}

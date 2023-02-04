@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getClients } from '../services/clients';
 import 'animate.css';
 import ScrollToTop from "react-scroll-to-top";
+import { useEffect } from 'react';
 
 
 export const AllClients = () => {
@@ -16,6 +17,7 @@ export const AllClients = () => {
     const [vipClientsState, setVipClients] = useState(0);
     const [inactiveClientsState, setInactiveClients] = useState(0);
     const [totalClientsState, setTotalClients] = useState(0);
+    const [cardIsChange, setCardIsChange] = useState(true);
 
 
     let clientsToShow = [];
@@ -25,7 +27,7 @@ export const AllClients = () => {
     let totalClients = 0;
 
     useMemo(() => {
-
+        clientsToShow = []
         if (!sessionStorage.getItem('tmtl-token')) {
             navigate('/auth/login');
         }
@@ -40,35 +42,42 @@ export const AllClients = () => {
 
             setClients(result.clients);
 
-
-            (result.clients).forEach((client) => {
-                totalClients++;
-
-                if (client.isActive) {
-                    activeClients++;
-                } else {
-                    inactiveClients++;
-                }
-
-                if (client.vip) {
-                    vipClients++;
-                }
-
-            })
-
             if (showClients.length === 0) {
 
                 setShowClients(result.clients);
-
-                setActiveClients(activeClients);
-                setTotalClients(totalClients);
-                setInactiveClients(inactiveClients);
-                setVipClients(vipClients);
             }
         }
 
         clientsApi();
-    }, [])
+    }, [cardIsChange]);
+
+
+    useEffect(() => {
+        totalClients = 0;
+        activeClients = 0;
+        inactiveClients = 0;
+        vipClients = 0;
+        clients.forEach((client) => {
+            totalClients++;
+
+            if (client.isActive) {
+                activeClients++;
+            } else {
+                inactiveClients++;
+            }
+
+            if (client.vip) {
+                vipClients++;
+            }
+
+        })
+
+        setActiveClients(activeClients);
+        setTotalClients(totalClients);
+        setInactiveClients(inactiveClients);
+        setVipClients(vipClients);
+
+    }, [cardIsChange, clients])
 
 
     const onclick = (event) => {
@@ -132,7 +141,7 @@ export const AllClients = () => {
             <div className='cards-container '>
                 {
                     showClients.map((client) => {
-                        return <ClientCard client={client} setShowClients={setShowClients} key={client.id} />
+                        return <ClientCard client={client} setShowClients={setShowClients} key={client.id} setCardIsChange={setCardIsChange} cardIsChange={cardIsChange} />
                     })
                 }
             </div>

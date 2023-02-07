@@ -8,104 +8,104 @@ import { ClientContext } from '../context/client/ClientContext';
 
 export const UpdateClient = () => {
 
-    const {id} = useParams();
-    
-    let {contextClient} = useContext(ClientContext);
+    const { id } = useParams();
+
+    let { contextClient } = useContext(ClientContext);
 
     const navigate = useNavigate();
 
-    useEffect(() =>{
-            if(!sessionStorage.getItem('tmtl-token')){
-                navigate('/auth/login');
-            }
-        },[])
+    useEffect(() => {
+        if (!sessionStorage.getItem('tmtl-token')) {
+            navigate('/auth/login');
+        }
+    }, [])
 
     const dateConvert = (dateAsString) => {
-        let date = new Date(dateAsString); 
+        let date = new Date(dateAsString);
         let month = date.getMonth() + 1;
         date = date.toDateString();
-        const [ , , day, year ] = date.split(' ');
+        const [, , day, year] = date.split(' ');
 
-        if(month < 10){month = '0' + month;} 
+        if (month < 10) { month = '0' + month; }
 
-        return year + '-' + month + '-' + day; 
+        return year + '-' + month + '-' + day;
     }
-    
+
     const formik = useFormik({
         initialValues: {
-          name: contextClient?.name,
-          surname: contextClient?.surname,
-          address: contextClient?.address,
-          zone: contextClient?.zone,
-          telephone:contextClient?.telephone,
-          email: contextClient?.email,
-          date_of_bird:dateConvert(contextClient?.date_of_bird),
-          vip: contextClient?.vip,
-          initial_weight: contextClient?.initial_weight,
-          objetive_weight: contextClient?.objetive_weight
+            name: contextClient?.name,
+            surname: contextClient?.surname,
+            address: contextClient?.address,
+            zone: contextClient?.zone,
+            telephone: contextClient?.telephone,
+            email: contextClient?.email,
+            date_of_bird: dateConvert(contextClient?.date_of_bird),
+            vip: contextClient?.vip,
+            initial_weight: contextClient?.initial_weight,
+            objetive_weight: contextClient?.objetive_weight
         },
         validationSchema: Yup.object({
-          name: Yup.string()
-            .max(15, 'Debe tener 15 caracteres o menos')
-            .required('Este campo es obligatorio'),
-          surname: Yup.string()
-            .max(50, 'Debe tener 20 caracteres o menos')
-            .required('Este campo es obligatorio'),
-          address: Yup.string()
-            .max(50, 'Debe tener 20 caracteres o menos')
-            .required('Este campo es obligatorio'),
-          zone: Yup.string()
-            .max(50, 'Debe tener 20 caracteres o menos')
-            .required('Este campo es obligatorio'),
-          telephone: Yup.string()
-          .max(15, 'Debe tener 15 caracteres o menos')
-          .required('Este campo es obligatorio'),
-          email: Yup.string().email('Invalid email address').required('Este campo es obligatorio'),
-          date_of_bird: Yup.string()
-            .required('Este campo es obligatorio'),
-          initial_weight: Yup.number()
-            .required('Este campo es obligatorio'),
-          objetive_weight: Yup.number()
-            .required('Este campo es obligatorio'),
+            name: Yup.string()
+                .max(15, 'Debe tener 15 caracteres o menos')
+                .required('Este campo es obligatorio'),
+            surname: Yup.string()
+                .max(50, 'Debe tener 20 caracteres o menos')
+                .required('Este campo es obligatorio'),
+            address: Yup.string()
+                .max(50, 'Debe tener 20 caracteres o menos')
+                .required('Este campo es obligatorio'),
+            zone: Yup.string()
+                .max(50, 'Debe tener 20 caracteres o menos')
+                .required('Este campo es obligatorio'),
+            telephone: Yup.string()
+                .max(15, 'Debe tener 15 caracteres o menos')
+                .required('Este campo es obligatorio'),
+            email: Yup.string().email('Invalid email address').required('Este campo es obligatorio'),
+            date_of_bird: Yup.string()
+                .required('Este campo es obligatorio'),
+            initial_weight: Yup.number()
+                .required('Este campo es obligatorio'),
+            objetive_weight: Yup.number()
+                .required('Este campo es obligatorio'),
         }),
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
 
             try {
                 values.id = id;
                 values.isActive = contextClient.isActive;
-                const res = await updateClient(values) ;
-      
-                if(res){
+                const res = await updateClient(values);
+
+                if (res) {
                     navigate(`/clientDetails/${id}`);
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'Cliente actualizado con éxito',
-                      showConfirmButton: false,
-                      timer: 1500
+                    return Swal.fire({
+                        icon: 'success',
+                        title: 'Cliente actualizado con éxito',
+                        showConfirmButton: false,
+                        timer: 1500
                     })
                 }
             } catch (error) {
                 console.log(error);
-                
+
                 navigate('/auth/login');
                 sessionStorage.removeItem('tmtl-token');
 
                 return Swal.fire({
-                  icon: 'error',
-                  title: `No se pudo actualizar el cliente.`,
-                  showConfirmButton: false,
-                  timer: 2000
+                    icon: 'error',
+                    title: `No se pudo actualizar el cliente.`,
+                    showConfirmButton: false,
+                    timer: 2000
                 })
             }
 
 
         },
-      });
-      return (
+    });
+    return (
         <section className='animate__animated animate__fadeInUp'>
             <h3>Modificar cliente</h3>
             <form onSubmit={formik.handleSubmit} className="formik-container">
-                    
+
                 <label htmlFor="name" className="mt-3">Nombre</label>
                 <input
                     className='form-control'
@@ -118,7 +118,7 @@ export const UpdateClient = () => {
                 />
                 {formik.touched.name && formik.errors.name ? (
                     <div className='error'>{formik.errors.name}</div>
-                    ) : null}
+                ) : null}
 
                 <label htmlFor="surname" className="mt-3">Apellidos</label>
                 <input
@@ -161,7 +161,7 @@ export const UpdateClient = () => {
                 {formik.touched.date_of_bird && formik.errors.date_of_bird ? (
                     <div className='error'>{formik.errors.date_of_bird}</div>
                 ) : null}
-            
+
 
                 <label htmlFor="telephone" className="mt-3">Teléfono</label>
                 <input
@@ -231,22 +231,37 @@ export const UpdateClient = () => {
                 />
 
                 <label className='mt-3'>
+                    Es cliente activo
+                    <input
+                        type="checkbox"
+                        id="vip"
+                        name="vip"
+                        className='mx-1'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.isActive}
+                        checked={contextClient.isActive}
+                        onClick={() => contextClient.isActive = !contextClient.isActive}
+                    />
+                </label>
+
+                <label className='mt-3'>
                     Es cliente VIP
                     <input
-                        type="checkbox" 
-                        id="vip" 
-                        name="vip" 
-                        className='mx-1' 
+                        type="checkbox"
+                        id="vip"
+                        name="vip"
+                        className='mx-1'
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.vip}
                         checked={contextClient.vip}
                         onClick={() => contextClient.vip = !contextClient.vip}
-                        />
+                    />
                 </label>
                 <br />
                 <button className='btn btn-primary mt-3' type="submit">Actualizar</button>
             </form>
         </section>
-      );
+    );
 }

@@ -10,6 +10,7 @@ export const ClientCard = ({ client, setCardIsChange, cardIsChange }) => {
   const [clientState, setClient] = useState(client);
   const { setContextClient } = useContext(ClientContext);
 
+
   const changeIsActiveProperty = () => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -85,11 +86,6 @@ export const ClientCard = ({ client, setCardIsChange, cardIsChange }) => {
               className="btn btn-warning mx-2 mt-2"
               onClick={updateClientContext}
             >Modificar</Link>
-
-            <Link
-              className="btn btn-danger mx-2 mt-2"
-              onClick={changeIsActiveProperty}
-            >Dar de baja / alta</Link>
 
             <Link
               to={`/createPayment/${clientState.id}`}

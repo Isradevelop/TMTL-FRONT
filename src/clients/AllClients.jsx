@@ -17,7 +17,7 @@ export const AllClients = () => {
     const [vipClientsState, setVipClients] = useState(0);
     const [inactiveClientsState, setInactiveClients] = useState(0);
     const [totalClientsState, setTotalClients] = useState(0);
-    const [cardIsChange, setCardIsChange] = useState(true);
+    const [cardIsChange, setCardIsChange] = useState(0);
 
 
     let clientsToShow = [];
@@ -77,7 +77,7 @@ export const AllClients = () => {
         setInactiveClients(inactiveClients);
         setVipClients(vipClients);
 
-    }, [cardIsChange, clients])
+    }, [clients])
 
 
     const onclick = (event) => {
@@ -133,6 +133,7 @@ export const AllClients = () => {
                 <li className="list-group-item list-group-item-warning">Nº de clientes Vip: {vipClientsState}</li>
                 <li className="list-group-item list-group-item-danger">Nº de clientes inactivos: {inactiveClientsState}</li>
             </ul>
+
             {
                 clients.length === 0 && <div className='spinner-container'>
                     <div className="spinner-border text-dark" role="status"></div>
@@ -141,7 +142,7 @@ export const AllClients = () => {
             <div className='cards-container '>
                 {
                     showClients.map((client) => {
-                        return <ClientCard client={client} setShowClients={setShowClients} key={client.id} setCardIsChange={setCardIsChange} cardIsChange={cardIsChange} />
+                        return <ClientCard client={client} key={client.id} setCardIsChange={setCardIsChange} cardIsChange={cardIsChange} />
                     })
                 }
             </div>
